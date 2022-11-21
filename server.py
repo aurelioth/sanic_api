@@ -11,7 +11,7 @@ app = Sanic("MyHelloWorldApp")
 Extend(app)
 app.blueprint(bp)
 app.static('/static', './static')
-#app.run(host='0.0.0.0', port=1337, access_log=False)
+app.run(host='0.0.0.0', port=1337, access_log=False)
 
 """ @app.get("/")
 async def hello_world(request):
