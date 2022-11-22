@@ -2,19 +2,19 @@ from sanic.response import html,json,text
 from sanic import Blueprint
 import requests
 from bs4 import BeautifulSoup
-import mysql.connector
+#import mysql.connector
 
 bp = Blueprint('city_data')
 
 
-mydb = mysql.connector.connect(
+""" mydb = mysql.connector.connect(
     host="localhost",
     user="root",
     password="temporal",
     database="city-data"
 )
 cursor =  mydb.cursor()
-
+ """
 
 @bp.route('/zipcodes/<zipcode:str>')
 async def bp_root(request,zipcode:str):
@@ -43,10 +43,10 @@ async def bp_city(request,city:str):
 
 @bp.route('/search/<state:str>')
 async def bp_search(request,state:str):
-    #st_n = states(state)
-    cursor.execute("Select * from states where abbr='"+state+"'")
-    sts = cursor.fetchone()
-    URL = "http://www.city-data.com/advanced/schCities.php?csize=a&sc=1&sd=0&states="+sts[3]+"&near=&nam_crit1=854&b854=MIN&e854=MAX&i854=1&ps=1000&p=0"
+    st_n = states(state)
+    #cursor.execute("Select * from states where abbr='"+state+"'")
+    #sts = cursor.fetchone()
+    URL = "http://www.city-data.com/advanced/schCities.php?csize=a&sc=1&sd=0&states="+st_n+"&near=&nam_crit1=854&b854=MIN&e854=MAX&i854=1&ps=1000&p=0"
     page = requests.get(URL,verify=False)
     return html(page.content)
     
